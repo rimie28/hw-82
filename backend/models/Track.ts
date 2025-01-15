@@ -13,6 +13,10 @@ const TrackSchema = new Schema({
     duration: {
         type: String,
     },
+    number: {
+        type: Number,
+        required: true
+    }
 })
 
 export const Track = mongoose.model('Track', TrackSchema)
