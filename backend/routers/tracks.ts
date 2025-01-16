@@ -1,7 +1,6 @@
 import express from 'express';
 import {Track} from "../models/Track";
 
-
 const tracksRouter = express.Router();
 
 tracksRouter.get('/', async (req, res) => {

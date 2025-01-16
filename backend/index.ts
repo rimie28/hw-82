@@ -5,6 +5,8 @@ import albumsRouter from "./routers/albums";
 import tracksRouter from "./routers/tracks";
 import usersRouter from "./routers/users";
 import trackHistoryRouter from "./routers/track_history";
+import config from "./config";
+import cors from 'cors';
 
 const app = express();
 app.use(express.json());
@@ -16,10 +18,17 @@ app.use('/tracks', tracksRouter);
 app.use('/users', usersRouter);
 app.use('/track_history', trackHistoryRouter);
 
+app.use(cors())
 
-mongoose
-    .connect('mongodb://localhost:27017/hw-82')
-    .then(() => {
-        app.listen(port, () => console.log(`Server running on port ${port}`));
-    })
-    .catch((error) => console.error(error));
+
+const run = async () => {
+    await mongoose.connect(config.db);
+    app.listen(port, () => {
+        console.log(`Server started on ${port} port!`);
+    });
+    process.on('exit', () => {
+        mongoose.disconnect();
+    });
+};
+
+run()
